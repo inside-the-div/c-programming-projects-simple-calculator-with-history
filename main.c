@@ -1,15 +1,16 @@
 #include <stdio.h>
 #include <float.h>
 #include <stdlib.h>
+#include <math.h> // power function er jonno lagbe
 
 #define HISTORY_FILE "history.txt"
 
-// Clear console function
+// ei function console clear kore
 void clearConsole() {
     system("cls");
 }
 
-// Show all history from file
+// ei function file theke history show kore
 void showHistory() {
     FILE *file = fopen(HISTORY_FILE, "r");
     if (!file) {
@@ -25,18 +26,19 @@ void showHistory() {
     printf("\t---------------------------\n");
     fclose(file);
 }
-// Save calculation to history
-void saveToHistory(double a, char op, double b, double res) {
+
+// ei function history file e calculation save kore
+void saveToHistory(double num1, char op, double num2, double res) {
     FILE *file = fopen(HISTORY_FILE, "a");
     if (!file) {
         printf("Error saving history.\n");
         return;
     }
-    fprintf(file, "%.2lf %c %.2lf = %.2lf\n", a, op, b, res);
+    fprintf(file, "%.2lf %c %.2lf = %.2lf\n", num1, op, num2, res);
     fclose(file);
 }
 
-// Clear history file
+// ei function history file clear kore
 void clearHistory() {
     FILE *file = fopen(HISTORY_FILE, "w");
     if (!file) {
@@ -47,7 +49,7 @@ void clearHistory() {
     printf("\nHistory cleared successfully.\n");
 }
 
-// Display menu with tab spaces
+// ei function menu show kore
 void showMenu() {
     printf("\n\t===== Simple Calculator =====\n");
     printf("\t1. C - Calculate\n");
@@ -63,34 +65,38 @@ int main() {
     char choice;
     do {
         showMenu();
-        scanf(" %c", &choice); // space before %c to avoid newline issues
+        scanf(" %c", &choice); // space rakha hoyeche jate newline problem na hoy
 
         if (choice == 'C' || choice == 'c') {
             char op;
-            double a, b, res;
+            double num1, num2, res;
 
-            printf("\tEnter an operator (+, -, *, /): ");
+            printf("\tEnter an operator (+, -, *, /, ^): ");
             scanf(" %c", &op);
 
             printf("\tEnter two operands: ");
-            scanf("%lf %lf", &a, &b);
+            scanf("%lf %lf", &num1, &num2);
 
+            // operator check kore calculation kore
             switch (op) {
                 case '+':
-                    res = a + b;
+                    res = num1 + num2;
                     break;
                 case '-':
-                    res = a - b;
+                    res = num1 - num2;
                     break;
                 case '*':
-                    res = a * b;
+                    res = num1 * num2;
                     break;
                 case '/':
-                    if (b == 0) {
+                    if (num2 == 0) {
                         printf("Error! Division by zero.\n");
                         continue;
                     }
-                    res = a / b;
+                    res = num1 / num2;
+                    break;
+                case '^': // power calculation
+                    res = pow(num1, num2);
                     break;
                 default:
                     printf("Error! Incorrect Operator Value\n");
@@ -98,7 +104,7 @@ int main() {
             }
 
             printf("\tResult: %.2lf\n", res);
-            saveToHistory(a, op, b, res);
+            saveToHistory(num1, op, num2, res);
 
         } else if (choice == 'H' || choice == 'h') {
             showHistory();
