@@ -25,7 +25,6 @@ void showHistory() {
     printf("\t---------------------------\n");
     fclose(file);
 }
-
 // Save calculation to history
 void saveToHistory(double a, char op, double b, double res) {
     FILE *file = fopen(HISTORY_FILE, "a");
@@ -70,10 +69,10 @@ int main() {
             char op;
             double a, b, res;
 
-            printf("Enter an operator (+, -, *, /): ");
+            printf("\tEnter an operator (+, -, *, /): ");
             scanf(" %c", &op);
 
-            printf("Enter two operands: ");
+            printf("\tEnter two operands: ");
             scanf("%lf %lf", &a, &b);
 
             switch (op) {
@@ -98,7 +97,7 @@ int main() {
                     continue;
             }
 
-            printf("Result: %.2lf\n", res);
+            printf("\tResult: %.2lf\n", res);
             saveToHistory(a, op, b, res);
 
         } else if (choice == 'H' || choice == 'h') {
